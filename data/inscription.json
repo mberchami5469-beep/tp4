@@ -1,0 +1,126 @@
+[
+  {
+    "id": 101,
+    "boxeurId": 1,
+    "status": "Payé",
+    "date": "2026-10-10",
+    "items": [
+      {
+        "offreId": 10,
+        "quantity": 1
+      },
+      {
+        "offreId": 15,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "boxeurId": 2,
+    "status": "En attente",
+    "date": "2026-10-11",
+    "items": [
+      {
+        "offreId": 11,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "boxeurId": 3,
+    "status": "Payé",
+    "date": "2026-10-12",
+    "items": [
+      {
+        "offreId": 13,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "boxeurId": 4,
+    "status": "Annulé",
+    "date": "2026-10-13",
+    "items": [
+      {
+        "offreId": 12,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "boxeurId": 5,
+    "status": "Payé",
+    "date": "2026-10-14",
+    "items": [
+      {
+        "offreId": 14,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "boxeurId": 6,
+    "status": "En attente",
+    "date": "2026-10-15",
+    "items": [
+      {
+        "offreId": 10,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "boxeurId": 1,
+    "status": "Payé",
+    "date": "2026-10-16",
+    "items": [
+      {
+        "offreId": 12,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "boxeurId": 2,
+    "status": "En attente",
+    "date": "2026-10-17",
+    "items": [
+      {
+        "offreId": 15,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "boxeurId": 3,
+    "status": "Payé",
+    "date": "2026-10-18",
+    "items": [
+      {
+        "offreId": 11,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "boxeurId": 4,
+    "status": "En attente",
+    "date": "2026-10-19",
+    "items": [
+      {
+        "offreId": 10,
+        "quantity": 2
+      }
+    ]
+  }
+]

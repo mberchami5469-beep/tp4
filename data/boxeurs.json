@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Mouad",
+    "category": "Professionnel",
+    "active": true,
+    "date": "2026-01-10",
+    "description": "Boxeur spécialisé en boxe anglaise."
+  },
+  {
+    "id": 2,
+    "name": "Yassine",
+    "category": "Amateur",
+    "active": true,
+    "date": "2026-02-15",
+    "description": "Boxeur amateur participant aux compétitions."
+  },
+  {
+    "id": 3,
+    "name": "Sara",
+    "category": "Débutant",
+    "active": true,
+    "date": "2026-03-05",
+    "description": "Débutante qui apprend les techniques de base."
+  },
+  {
+    "id": 4,
+    "name": "Amine",
+    "category": "Amateur",
+    "active": true,
+    "date": "2026-03-12",
+    "description": "Boxeur amateur qui s'entraîne régulièrement."
+  },
+  {
+    "id": 5,
+    "name": "Khadija",
+    "category": "Professionnel",
+    "active": true,
+    "date": "2026-04-01",
+    "description": "Boxeuse qui possède une bonne expérience sportive."
+  },
+  {
+    "id": 6,
+    "name": "Omar",
+    "category": "Débutant",
+    "active": false,
+    "date": "2026-04-10",
+    "description": "Ancien adhérent du club."
+  }
+]

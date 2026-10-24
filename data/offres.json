@@ -1,0 +1,44 @@
+[
+  {
+    "id": 10,
+    "name": "Boxe anglaise",
+    "category": "Boxe",
+    "price": 300,
+    "duration": "1 mois"
+  },
+  {
+    "id": 11,
+    "name": "Kickboxing",
+    "category": "Kickboxing",
+    "price": 350,
+    "duration": "1 mois"
+  },
+  {
+    "id": 12,
+    "name": "Muay Thai",
+    "category": "Muay Thai",
+    "price": 400,
+    "duration": "1 mois"
+  },
+  {
+    "id": 13,
+    "name": "Boxe enfants",
+    "category": "Boxe",
+    "price": 200,
+    "duration": "1 mois"
+  },
+  {
+    "id": 14,
+    "name": "Cours privé de boxe",
+    "category": "Boxe",
+    "price": 500,
+    "duration": "1 séance"
+  },
+  {
+    "id": 15,
+    "name": "Préparation physique",
+    "category": "Fitness",
+    "price": 250,
+    "duration": "1 mois"
+  }
+]
