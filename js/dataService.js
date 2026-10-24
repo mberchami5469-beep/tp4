@@ -10,11 +10,6 @@ const fetchJSON = async (url) => {
 
     return await response.json();
 };
-export const fetchBoxeurs = async () => {
-
-    return  await fetchJSON("./data/boxeurs.json");
-
-    };
 
     export const fetchAllData = async () => {
     try {

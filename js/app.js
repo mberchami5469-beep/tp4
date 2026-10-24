@@ -1,8 +1,11 @@
 
 import { state } from "./state.js";
 
-import { fetchBoxeurs } from "./dataService.js";
-
+import { fetchAllData} from "./dataService.js";
+import {
+    getVisibleBoxeurs,
+    getBoxeursWithSubscriptions
+} from "./selectors.js";
 import {
     renderBoxeurs,
     renderStats,
@@ -12,155 +15,84 @@ import {
 
 
 const searchInput = document.querySelector("#name");
-
 const categorySelect = document.querySelector("#categorie");
-
 const statusButtons = document.querySelectorAll(".status-btn");
-
 const paidOnly = document.querySelector("#check");
-
 const boxeursTable = document.querySelector("#boxeursTable");
-
 const errorMessage = document.querySelector("#messageErreur");
 
 
-const getVisibleBoxeurs = () => {
-
-    return state.boxeurs.filter(boxeur => {
-
-      
-        const matchesSearch =
-            boxeur.name.toLowerCase().includes(
-                state.search.toLowerCase()
-            );
-
-      
-        const matchesCategory =
-            state.category === "all" ||
-            boxeur.category === state.category;
-
-        const matchesStatus =
-            state.status === "all" ||
-            (state.status === "Actif" && boxeur.active) ||
-            (state.status === "Inactif" && !boxeur.active);
-
-
-        const matchesPayment =
-            !state.paidOnly || boxeur.paid;
-
-        return (
-            matchesSearch &&
-            matchesCategory &&
-            matchesStatus &&
-            matchesPayment
-        );
-    });
-};
-
-
-
 const render = () => {
-
-    const visibleBoxeurs = getVisibleBoxeurs();
-
-    renderBoxeurs(visibleBoxeurs);
-
-  
-    renderStats(state.boxeurs);
+    renderBoxeurs(getVisibleBoxeurs());
+    renderStats();
 };
 
 
-
-searchInput.addEventListener("input", event => {
-
-    state.search = event.target.value.trim();
-
+searchInput.addEventListener("input", () => {
+    state.search = searchInput.value;
     render();
 });
 
 
-
-categorySelect.addEventListener("change", event => {
-
-    state.category = event.target.value;
-
+categorySelect.addEventListener("change", () => {
+    state.category = categorySelect.value;
     render();
 });
-
 
 
 statusButtons.forEach(button => {
-
     button.addEventListener("click", () => {
-
         state.status = button.dataset.status;
 
+        statusButtons.forEach(btn => {
+            btn.classList.remove("btnactive");
+        });
+
+        button.classList.add("btnactive");
         render();
     });
 });
 
-
-paidOnly.addEventListener("change", event => {
-
-    state.paidOnly = event.target.checked;
-
+paidOnly.addEventListener("change", () => {
+    state.paidOnly = paidOnly.checked;
     render();
 });
 
 
-
 boxeursTable.addEventListener("click", event => {
-
     const button = event.target.closest(".details-btn");
 
-    if (!button) {
-        return;
+    if (button) {
+        const id = Number(button.dataset.id);
+        const boxeur = getBoxeursWithSubscriptions()
+            .find(b => b.id === id);
+
+        renderDetail(boxeur);
     }
-
-    const boxeurId = Number(button.dataset.id);
-
-    const boxeur = state.boxeurs.find(
-        boxeur => boxeur.id === boxeurId
-    );
-
-    if (!boxeur) {
-        return;
-    }
-
-    renderDetail(boxeur);
 });
 
 
-
 document.addEventListener("click", event => {
-
     if (event.target.id === "fermerDetail") {
         renderDetail(null);
     }
 });
 
 
-
 const init = async () => {
-
     try {
+        const data = await fetchAllData();
 
-        const boxeurs = await fetchBoxeurs();
+        state.boxeurs = data.boxeurs;
+        state.offres = data.offres;
+        state.inscriptions = data.inscriptions;
 
-        
-        state.boxeurs = boxeurs;
-
-        
         render();
-
-    }  catch (error) {
-    console.error("Erreur de chargement :", error);
-    console.error("Détail :", error.message);
-
-    errorMessage.classList.remove("d-none");
+    } catch (error) {
+       console.error("Erreur détaillée :", error);
     errorMessage.textContent = error.message;
-
-}};
+    }
+};
 
 
 
