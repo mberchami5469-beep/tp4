@@ -1,19 +1,37 @@
 
-export const fetchBoxeurs = async () => {
-
-    const response =
-        await fetch("./data/data.json");
+const fetchJSON = async (url) => {
+    const response = await fetch(url);
 
     if (!response.ok) {
-
         throw new Error(
-            "Impossible de charger les boxeurs."
+            "Impossible de charger le fichier : " + url
         );
-
     }
 
-    const boxeurs =
-        await response.json();
+    return await response.json();
+};
+export const fetchBoxeurs = async () => {
 
-    return boxeurs;
+    return  await fetchJSON("./data/boxeurs.json");
+
+    };
+
+    export const fetchAllData = async () => {
+    try {
+        const [boxeurs, offres, inscriptions] =
+            await Promise.all([
+  fetchJSON("./data/boxeurs.json"),
+ fetchJSON("./data/offres.json"),
+fetchJSON("./data/inscriptions.json")
+ ]);
+
+        return {
+    boxeurs,
+    offres,
+    inscriptions
+        };
+    } catch (error) {
+        console.error("Erreur de chargement :", error);
+        throw error;
+    }
 };
