@@ -1,81 +1,29 @@
 
-const boxeursTable =
-    document.querySelector("#boxeursTable");
-
-const resultCount =
-    document.querySelector("#resultCount");
-
-const totalBoxeurs =
-    document.querySelector("#totalBoxeurs");
-
-const boxeursActifs =
-    document.querySelector("#boxeursActifs");
-
-const abonnementsPayes =
-    document.querySelector("#abonnementsPayes");
-
-const montantTotal =
-    document.querySelector("#montantTotal");
-
-const detailBoxeur =
-    document.querySelector("#detailBoxeur");
-
-
-
-
-const getStatusClass = (active) => {
-
-    if (active) {
-        return "text-success";
-    }
-
-    return "text-danger";
-};
-
-
+import { getStats } from "./selectors.js";
+const boxeursTable =document.querySelector("#boxeursTable");
+const resultCount =document.querySelector("#resultCount");
+const totalBoxeurs =   document.querySelector("#totalBoxeurs");
+const boxeursActifs =document.querySelector("#boxeursActifs");
+const abonnementsPayes =document.querySelector("#abonnementsPayes");
+const montantTotal =document.querySelector("#montantTotal");
+const detailBoxeur = document.querySelector("#detailBoxeur");
 
 
 const createBoxeurRow = (boxeur) => {
-
-    const paymentText =
-        boxeur.paid ? "Payé" : "Non payé";
-
-    const paymentClass =
-        boxeur.paid ? "text-success" : "text-danger";
-
-    const statusText =
-        boxeur.active ? "Actif" : "Inactif";
-
-    const statusClass =
-        getStatusClass(boxeur.active);
-
     return `
         <tr>
             <td>#${boxeur.id}</td>
-
             <td>${boxeur.name}</td>
-
             <td>${boxeur.category}</td>
-
-            <td>${boxeur.value} DH</td>
-
-            <td class="${paymentClass}">
-                ${paymentText}
-            </td>
-
+          <td>${boxeur.value} DH</td>
+          <td>${boxeur.paid ? "Payé" : "Non payé"}</td>
             <td>${boxeur.date}</td>
-
             <td>
-                <button
-                    class="btn btn-sm btn-outline-dark details-btn"
-                    data-id="${boxeur.id}"
-                >
+                <button class="btn btn-sm btn-dark details-btn"
+                    data-id="${boxeur.id}">
                     Voir
                 </button>
-
-                <span class="${statusClass}">
-                    ${statusText}
-                </span>
+                ${boxeur.active ? "Actif" : "Inactif"}
             </td>
         </tr>
     `;
@@ -86,63 +34,30 @@ const createBoxeurRow = (boxeur) => {
 export const renderBoxeurs = (boxeurs) => {
 
     resultCount.textContent =
-        `${boxeurs.length} boxeur(s) affiché(s)`;
-
+          boxeurs.length + " boxeur(s) affiché(s)";
     if (boxeurs.length === 0) {
-
         boxeursTable.innerHTML = `
-            <tr>
-                <td colspan="7"
-                    class="text-center text-muted py-4">
-                    Aucun boxeur trouvé.
-                </td>
+             <tr>
+                <td colspan="7">Aucun boxeur trouvé.</td>
             </tr>
         `;
 
         return;
     }
 
-    boxeursTable.innerHTML =
-        boxeurs.map(createBoxeurRow).join("");
+    boxeursTable.innerHTML = boxeurs.map(createBoxeurRow).join("");
 };
 
 
 
-export const renderStats = (boxeurs) => {
+export const renderStats = () => {
+    const stats = getStats();
 
-    // Nombre total de boxeurs
-    totalBoxeurs.textContent =
-        boxeurs.length;
-
-    // Nombre de boxeurs actifs
-    const actifs = boxeurs.filter(
-        boxeur => boxeur.active
-    );
-
-    boxeursActifs.textContent =
-        actifs.length;
-
-    // Nombre d'abonnements payés
-    const payes = boxeurs.filter(
-        boxeur => boxeur.paid
-    );
-
-    abonnementsPayes.textContent =
-        payes.length;
-
-  
-    let montant = 0;
-
-    boxeurs.forEach(boxeur => {
-        montant += boxeur.value;
-    });
-
-    montantTotal.textContent =
-        `${montant} DH`;
+    totalBoxeurs.textContent = stats.total;
+    boxeursActifs.textContent = stats.actifs;
+    abonnementsPayes.textContent = stats.payes;
+    montantTotal.textContent = stats.montant + " DH";
 };
-
-
-
 
 export const renderDetail = (boxeur) => {
 
@@ -150,51 +65,57 @@ export const renderDetail = (boxeur) => {
         detailBoxeur.innerHTML = "";
         return;
     }
-
-    detailBoxeur.innerHTML = `
-        <div class="card">
+   let html = `
+        <div class="card mt-4">
             <div class="card-body">
-                <h4 class="card-title">
-                    ${boxeur.name}
-                </h4>
+                <h4>${boxeur.name}</h4>
+                <p>Catégorie : ${boxeur.category}</p>
+                <p>Statut : ${boxeur.active ? "Actif" : "Inactif"}</p>
+                <p>Montant : ${boxeur.value} DH</p>
+                <p>Date : ${boxeur.date}</p>
+                <p>${boxeur.description}</p>
+                <hr>
+                <h5>Historique des inscriptions</h5>
+    `;
 
-                <p>
-                    <strong>Catégorie :</strong>
-                    ${boxeur.category}
-                </p>
+    if (boxeur.inscriptions.length === 0) {
+        html += "<p>Aucune inscription.</p>";
+    } else {
+        boxeur.inscriptions.forEach(inscription => {
+            html += `
+                <div class="border p-3 mb-3">
+                    <p>Inscription #${inscription.id}</p>
+                    <p>Date : ${inscription.date}</p>
+                    <p>Statut : ${inscription.status}</p>
+                    <ul>
+            `;
 
-                <p>
-                    <strong>Abonnement :</strong>
-                    ${boxeur.value} DH
-                </p>
+            inscription.items.forEach(item => {
+                html += `
+                    <li>
+                        ${item.name} - ${item.quantity} x
+                        ${item.price} DH = ${item.lineTotal} DH
+                    </li>
+                `;
+            });
 
-                <p>
-                    <strong>Paiement :</strong>
-                    ${boxeur.paid ? "Payé" : "Non payé"}
-                </p>
+            html += `
+                    </ul>
+                    <p>Total : ${inscription.total} DH</p>
+                </div>
+            `;
+        });
+    }
 
-                <p>
-                    <strong>Statut :</strong>
-                    ${boxeur.active ? "Actif" : "Inactif"}
-                </p>
-
-                <p>
-                    <strong>Date d'inscription :</strong>
-                    ${boxeur.date}
-                </p>
-
-                <p>
-                    <strong>Description :</strong>
-                    ${boxeur.description}
-                </p>
-
-                <button
-                    class="btn btn-secondary"
-                    id="fermerDetail"
-                >
+    html += `
+                <button class="btn btn-secondary" id="fermerDetail">
                     Fermer
                 </button>
             </div>
         </div>
     `;
+
+    detailBoxeur.innerHTML = html;
+    detailBoxeur.scrollIntoView();
 };
+
