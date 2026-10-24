@@ -1,0 +1,111 @@
+
+body {
+    margin: 0;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #212529;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    border-bottom: 4px solid #dc3545;
+}
+
+header h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+.card {
+    height: 100%;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-text {
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.card-title {
+    color: #2c4055;
+}
+
+.inp {
+    margin: 15px 50px;
+    padding: 10px;
+}
+
+label {
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+input[type="text"], select {
+    width: 100%;
+    max-width: 350px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    border-radius: 8px;
+    padding: 6px 12px;
+    border: 1px solid #212529;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.btnactive,
+button:hover {
+    background-color: #212529;
+    color: white;
+}
+
+table {
+    width: 100%;
+    background-color: white;
+}
+
+table th {
+    background-color: #212529;
+    color: white;
+    text-align: center;
+}
+
+table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#detailBoxeur {
+    margin-top: 20px;
+}
+
+#messageErreur {
+    color: #dc3545;
+    margin-top: 15px;
+}
+
+@media (max-width: 576px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    .inp {
+        margin: 15px;
+    }
+}
